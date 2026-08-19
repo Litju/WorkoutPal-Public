@@ -1,0 +1,21 @@
+{
+  "name": "@workoutpal/shared-kernel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/public.ts",
+      "import": "./dist/public.js",
+      "default": "./dist/public.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/public.js",
+  "types": "./dist/public.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  }
+}

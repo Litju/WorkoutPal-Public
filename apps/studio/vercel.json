@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node ../../scripts/vercel-build.mjs",
+  "functions": {
+    "api/science_velocity.py": {
+      "maxDuration": 30
+    },
+    "api/science_segmentation.py": {
+      "maxDuration": 30
+    },
+    "api/science_rep_phase_kinematic_metrics.py": {
+      "maxDuration": 30
+    },
+    "api/science_set_velocity_state.py": {
+      "maxDuration": 30
+    },
+    "api/science_load_velocity_profile.py": {
+      "maxDuration": 30
+    },
+    "api/science_maximal_strength.py": {
+      "maxDuration": 30
+    },
+    "api/science_signal_mechanics.py": {
+      "maxDuration": 30
+    }
+  }
+}

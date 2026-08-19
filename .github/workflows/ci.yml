@@ -1,0 +1,60 @@
+name: WorkoutPal CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  application:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18.4-alpine
+        env:
+          POSTGRES_DB: workoutpal
+          POSTGRES_USER: workoutpal
+          POSTGRES_PASSWORD: workoutpal_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U workoutpal -d workoutpal"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      DATABASE_URL: postgresql://workoutpal_runtime_login:workoutpal_runtime_ci@127.0.0.1:5432/workoutpal
+      DATABASE_MIGRATION_URL: postgresql://workoutpal:workoutpal_ci@127.0.0.1:5432/workoutpal
+      WORKOUTPAL_RUNTIME_LOGIN: workoutpal_runtime_login
+      WORKOUTPAL_RUNTIME_PASSWORD: workoutpal_runtime_ci
+      BETTER_AUTH_SECRET: workoutpal-ci-secret-replace-in-production-32
+      BETTER_AUTH_URL: http://127.0.0.1:3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm db:migrate
+      - run: pnpm db:provision-runtime
+      - run: pnpm test:integration
+      - run: pnpm build
+
+  scientific:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.11.13"
+      - run: uv python install 3.12
+      - run: uv sync --frozen
+      - run: uv run ruff format --check packages/science-port/engine apps/studio/api
+      - run: uv run ruff check packages/science-port/engine apps/studio/api
+      - run: uv run mypy
+      - run: uv run python -m unittest discover -s packages/science-port/engine -p "test_*.py"

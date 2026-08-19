@@ -1,0 +1,46 @@
+[project]
+name = "workoutpal-science-python"
+version = "0.1.0"
+description = "Repository-owned Python scientific processors for WorkoutPal"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy==2.5.2",
+    "scipy==1.18.0",
+]
+
+[dependency-groups]
+dev = [
+  "mypy==2.3.1",
+  "ruff==0.16.3",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["B905", "E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.mypy]
+python_version = "3.12"
+files = [
+  "packages/science-port/engine/maximal_strength_processor.py",
+  "packages/science-port/engine/test_maximal_strength_processor.py",
+  "packages/science-port/engine/scientific_signal_mechanics_processor.py",
+  "packages/science-port/engine/test_scientific_signal_mechanics_processor.py",
+  "apps/studio/api/science_maximal_strength.py",
+  "apps/studio/api/test_science_maximal_strength_loader.py",
+  "apps/studio/api/science_signal_mechanics.py",
+]
+check_untyped_defs = true
+disallow_untyped_defs = false
+no_implicit_optional = true
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true

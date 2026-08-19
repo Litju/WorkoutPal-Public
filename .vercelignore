@@ -1,0 +1,14 @@
+.git
+.vercel
+**/node_modules
+**/.next
+**/.turbo
+**/.eve
+**/.output
+**/storybook-static
+playwright-report
+test-results
+coverage
+**/*.tsbuildinfo
+**/__pycache__
+**/*.pyc

@@ -1,0 +1,51 @@
+{
+  "name": "workoutpal",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=24.15.0 <25",
+    "pnpm": "11.1.1"
+  },
+  "scripts": {
+    "check": "pnpm biome check .",
+    "format": "pnpm biome format --write .",
+    "lint": "pnpm biome lint .",
+    "typecheck": "turbo run typecheck",
+    "test": "pnpm test:unit && pnpm test:architecture && pnpm test:contracts",
+    "test:unit": "vitest run tests/unit",
+    "test:architecture": "vitest run tests/architecture",
+    "arch-check": "vitest run tests/architecture",
+    "test:contracts": "vitest run tests/contracts",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "playwright test --pass-with-no-tests",
+    "build": "turbo run build",
+    "build-storybook": "pnpm --filter @workoutpal/studio build-storybook",
+    "dev": "turbo run dev --parallel",
+    "db:start": "docker compose -f docker-compose.dev.yml up -d postgres",
+    "db:stop": "docker compose -f docker-compose.dev.yml stop postgres",
+    "db:down": "docker compose -f docker-compose.dev.yml down",
+    "db:health": "docker compose -f docker-compose.dev.yml ps postgres",
+    "db:provision-runtime": "node --env-file-if-exists=.env.local scripts/qualification/provision-runtime-role.mjs",
+    "db:migrate": "pnpm --filter @workoutpal/persistence-postgres db:migrate",
+    "db:query": "docker compose -f docker-compose.dev.yml exec -T postgres psql -U workoutpal -d workoutpal",
+    "demo:seed": "node --env-file-if-exists=.env.local scripts/demo/seed-demo.mjs",
+    "storybook": "pnpm --filter @workoutpal/studio storybook"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "@biomejs/biome": "2.5.7",
+    "@playwright/test": "1.62.1",
+    "@types/node": "24.13.3",
+    "@types/pg": "8.15.6",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "ai-elements": "^1.9.0",
+    "pg": "8.23.0",
+    "shadcn": "^4.18.0",
+    "turbo": "2.10.9",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
+  }
+}

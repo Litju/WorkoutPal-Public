@@ -1,0 +1,32 @@
+{
+  "name": "@workoutpal/application",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/public.ts",
+      "import": "./dist/public.js",
+      "default": "./dist/public.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/public.js",
+  "types": "./dist/public.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@workoutpal/accounts": "workspace:0.1.0",
+    "@workoutpal/agent-operations": "workspace:0.1.0",
+    "@workoutpal/assessments": "workspace:0.1.0",
+    "@workoutpal/athletes": "workspace:0.1.0",
+    "@workoutpal/monitoring": "workspace:0.1.0",
+    "@workoutpal/provenance": "workspace:0.1.0",
+    "@workoutpal/shared-kernel": "workspace:0.1.0",
+    "@workoutpal/training-design": "workspace:0.1.0",
+    "@workoutpal/training-execution": "workspace:0.1.0"
+  }
+}

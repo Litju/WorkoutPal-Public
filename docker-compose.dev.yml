@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:18.4-alpine
+    environment:
+      POSTGRES_DB: workoutpal
+      POSTGRES_USER: workoutpal
+      POSTGRES_PASSWORD: workoutpal_dev
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - workoutpal-public-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U workoutpal -d workoutpal"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 5s
+
+volumes:
+  workoutpal-public-postgres-data:
+    name: workoutpal-public-postgres-data
